@@ -99,11 +99,3 @@ async def analyze(req: AnalyzeRequest):
 
 # ⛓️ For Render: Bind to correct port
 import uvicorn
-
-def start():
-    port = int(os.environ.get("PORT", 5000))  # Render will inject PORT=5000
-    uvicorn.run("main:app", host="0.0.0.0", port=port)
-
-# Start server on Render (or locally too)
-start()
-
