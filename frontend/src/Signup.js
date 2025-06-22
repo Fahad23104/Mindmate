@@ -21,6 +21,7 @@ function Signup() {
     }
   };
 
+  
   return (
     <Container className="d-flex justify-content-center align-items-center vh-100 bg-light">
       <Card style={{ width: 400 }} className="p-4 shadow-sm">
