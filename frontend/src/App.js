@@ -55,7 +55,7 @@ function App() {
 
   const fetchJournals = async () => {
     try {
-      const res = await axios.get('http://localhost:5000/api/journals', {
+      const res = await axios.get('https://mindmate-lhoj.onrender.com/api/journals', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setJournals(res.data);
@@ -86,13 +86,13 @@ function App() {
       const config = { headers: { Authorization: `Bearer ${token}` } };
       if (editingId) {
         await axios.put(
-          `http://localhost:5000/api/journals/${editingId}`,
+          `https://mindmate-lhoj.onrender.com/api/journals/${editingId}`,
           { title, content },
           config
         );
       } else {
         await axios.post(
-          'http://localhost:5000/api/journals/add',
+          'https://mindmate-lhoj.onrender.com/api/journals/add',
           { title, content },
           config
         );
@@ -108,7 +108,7 @@ function App() {
 
   const deleteJournal = async (id) => {
     try {
-      await axios.delete(`http://localhost:5000/api/journals/${id}`, {
+      await axios.delete(`https://mindmate-lhoj.onrender.com/api/journals/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchJournals();

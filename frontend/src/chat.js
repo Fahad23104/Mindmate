@@ -29,7 +29,7 @@ function Chat() {
     setLoading(true);
 
     try {
-      const res = await axios.post('http://localhost:8000/chat', {
+      const res = await axios.post('https://mindmate-lhoj.onrender.com/chat', {
         message: userMessage,
         history: history
       });
