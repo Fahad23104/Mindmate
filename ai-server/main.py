@@ -6,12 +6,13 @@ import re
 from dotenv import load_dotenv
 import os
 
+# Load environment variables from .env file
 load_dotenv()
 
-
+# Initialize FastAPI app
 app = FastAPI()
 
-# Enable CORS for all origins (adjust for production)
+# Allow all origins (for dev; restrict in production)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -20,10 +21,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Hugging Face config
+# Load Hugging Face API settings
 HF_TOKEN = os.getenv("HF_TOKEN")
-print("Loaded HF Token:", HF_TOKEN)
-
 MODEL_ID = "HuggingFaceH4/zephyr-7b-beta"
 API_URL = f"https://api-inference.huggingface.co/models/{MODEL_ID}"
 HEADERS = {
@@ -69,23 +68,21 @@ async def chat(req: ChatRequest):
         result = response.json()
         if isinstance(result, list) and "generated_text" in result[0]:
             generated = result[0]["generated_text"]
-
-            # Extract response after [/INST]
             reply = generated.split("[/INST]")[-1].strip()
 
-            # Remove hallucinated tags like <<USER>> or <|USER|>
+            # Clean up output
             reply = re.sub(r"<<\s*USER\s*>>", "", reply)
             reply = re.sub(r"<\|/?USER\|>", "", reply)
             reply = re.sub(r"<\|/?ASSISTANT\|>", "", reply)
-            reply = reply.strip()
-
-            return {"response": reply}
+            return {"response": reply.strip()}
         else:
             return {"response": "⚠️ Unexpected response format from model."}
     elif response.status_code == 403:
         return {"response": "❌ Access denied. Accept the model license on Hugging Face."}
     elif response.status_code == 404:
         return {"response": "❌ Model not found. Check MODEL_ID or access."}
+    elif response.status_code == 401:
+        return {"response": "❌ Invalid Hugging Face token (401 Unauthorized)."}
     else:
         return {"response": f"⚠️ API error: {response.status_code} - {response.text}"}
 
@@ -99,3 +96,9 @@ async def analyze(req: AnalyzeRequest):
         return {"label": "NEGATIVE", "score": 0.85}
     else:
         return {"label": "NEUTRAL", "score": 0.60}
+
+# ⛓️ For Render: Bind to correct port
+if __name__ == "__main__":
+    import uvicorn
+    port = int(os.environ.get("PORT", 5000))
+    uvicorn.run("main:app", host="0.0.0.0", port=port)
