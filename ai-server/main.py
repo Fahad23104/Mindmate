@@ -3,6 +3,11 @@ from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 import requests
 import re
+from dotenv import load_dotenv
+import os
+
+load_dotenv()
+
 
 app = FastAPI()
 
@@ -16,7 +21,9 @@ app.add_middleware(
 )
 
 # Hugging Face config
-HF_TOKEN = "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"
+HF_TOKEN = os.getenv("HF_TOKEN")
+print("Loaded HF Token:", HF_TOKEN)
+
 MODEL_ID = "HuggingFaceH4/zephyr-7b-beta"
 API_URL = f"https://api-inference.huggingface.co/models/{MODEL_ID}"
 HEADERS = {
