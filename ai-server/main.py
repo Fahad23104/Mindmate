@@ -23,7 +23,7 @@ app.add_middleware(
 
 # Load Hugging Face API settings
 HF_TOKEN = os.getenv("HF_TOKEN")
-MODEL_ID = "HuggingFaceH4/zephyr-7b-beta"
+MODEL_ID = "meta-llama/Llama-3.1-8B-Instruct"
 API_URL = f"https://api-inference.huggingface.co/models/{MODEL_ID}"
 HEADERS = {
     "Authorization": f"Bearer {HF_TOKEN}",
@@ -43,10 +43,10 @@ async def chat(req: ChatRequest):
     user_input = req.message.strip()
 
     prompt = (
-        f"[INST] <<SYS>>\n"
+        f"<s>[INST] "
         f"You are a helpful and empathetic mental health assistant. "
-        f"Respond directly and compassionately without repeating the user's message or adding tags like <<USER>>.\n"
-        f"<</SYS>>\n{user_input} [/INST]"
+        f"Respond kindly and clearly to the user's input.\n\n"
+        f"{user_input} [/INST]"
     )
 
     payload = {
