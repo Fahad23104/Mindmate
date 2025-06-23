@@ -23,7 +23,7 @@ app.add_middleware(
 
 # Load Hugging Face API settings
 HF_TOKEN = os.getenv("HF_TOKEN")
-MODEL_ID = "meta-llama/Llama-3.1-8B-Instruct"
+MODEL_ID = "mistralai/Mistral-7B-Instruct-v0.3"
 API_URL = f"https://api-inference.huggingface.co/models/{MODEL_ID}"
 HEADERS = {
     "Authorization": f"Bearer {HF_TOKEN}",
@@ -43,11 +43,14 @@ async def chat(req: ChatRequest):
     user_input = req.message.strip()
 
     prompt = (
-        f"<s>[INST] "
-        f"You are a helpful and empathetic mental health assistant. "
-        f"Respond kindly and clearly to the user's input.\n\n"
-        f"{user_input} [/INST]"
-    )
+    f"<s>[INST] <<SYS>>\n"
+    f"You are MindMate, a supportive and emotionally intelligent mental health assistant. "
+    f"Always respond with empathy, encouragement, and clarity. "
+    f"Keep your answers warm, concise, and helpful—especially if the user gives very little context.\n"
+    f"<</SYS>>\n"
+    f"{user_input.strip()} [/INST]"
+)
+
 
     payload = {
         "inputs": prompt,
