@@ -13,7 +13,7 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('https://mindmate-lhoj.onrender.com/signup', form);
+      await axios.post('https://mindmate-lhoj.onrender.com/api/auth/signup', form);
       alert('Signup successful!');
       navigate('/login');
     } catch (err) {
