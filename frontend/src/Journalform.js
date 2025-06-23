@@ -15,7 +15,7 @@ const JournalForm = () => {
 
     try {
       await axios.post(
-        "https://mindmate-lhoj.onrender.com/api/journals/add",
+        "https://mindmate-server-iamz.onrender.com/api/journals/add",
         { title, content },
         { headers: { Authorization: `Bearer ${token}` } }
       );

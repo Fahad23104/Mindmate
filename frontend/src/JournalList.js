@@ -12,7 +12,7 @@ const JournalList = () => {
       const token = localStorage.getItem("token");
 
       try {
-        const res = await axios.get("https://mindmate-lhoj.onrender.com/api/journals", {
+        const res = await axios.get("https://mindmate-server-iamz.onrender.com/api/journals", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -31,7 +31,7 @@ const JournalList = () => {
   const handleDelete = async (id) => {
     const token = localStorage.getItem("token");
     try {
-      await axios.delete(`https://mindmate-lhoj.onrender.com/api/journals/${id}`, {
+      await axios.delete(`https://mindmate-server-iamz.onrender.com/api/journals/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       setJournals(journals.filter((j) => j._id !== id));

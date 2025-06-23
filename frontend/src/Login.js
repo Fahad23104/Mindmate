@@ -14,7 +14,7 @@ function Login({ onLogin }) {
     e.preventDefault();
     setLoading(true);
     try {
-      const res = await axios.post('https://mindmate-lhoj.onrender.com/api/auth/login', form);
+      const res = await axios.post('https://mindmate-server-iamz.onrender.com/api/auth/login', form);
       localStorage.setItem('username', res.data.username);
       onLogin(res.data.token);
     } catch (err) {
