@@ -11,7 +11,7 @@ router.post("/add", protect, async (req, res) => {
     console.log("Received data:", req.body);  // Debug
 
     // Call AI API for sentiment analysis
-    const aiResponse = await axios.post("http://localhost:8000/analyze", {
+    const aiResponse = await axios.post("https://mindmate-lhoj.onrender.com/analyze", {
       text: content,
     });
 
@@ -61,7 +61,7 @@ router.put("/:id", protect, async (req, res) => {
   const { title, content } = req.body;
   try {
     // Re-analyze sentiment
-    const aiResponse = await axios.post("http://localhost:8000/analyze", {
+    const aiResponse = await axios.post("https://mindmate-lhoj.onrender.com/analyze", {
       text: content,
     });
 
